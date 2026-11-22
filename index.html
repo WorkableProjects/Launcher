@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Itz Workable Launcher</title>
+  <meta name="description" content="Every public WorkableProjects app, one tap away.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="assets/logo-light.png" id="favicon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    (function () {
+      try {
+        var m = localStorage.getItem('iw.theme') || 'auto';
+        var h = new Date().getHours();
+        var t = m !== 'auto' ? m : h >= 6 && h < 12 ? 'light' : h >= 12 && h < 17 ? 'cyan' : h >= 17 && h < 20 ? 'pink' : 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="brand" href="./" aria-label="Itz Workable Launcher home">
+        <img class="mark" id="mark" src="assets/logo-light.png" alt="" width="28" height="28">
+        <span class="wordmark">Itz Workable</span>
+      </a>
+      <div class="bar-right">
+        <div class="segmented" role="radiogroup" aria-label="Appearance" id="themes">
+          <button role="radio" data-mode="auto">Auto</button>
+          <button role="radio" data-mode="light">Light</button>
+          <button role="radio" data-mode="dark">Dark</button>
+          <button role="radio" data-mode="cyan">Cyan</button>
+          <button role="radio" data-mode="pink">Pink</button>
+        </div>
+        <button class="btn-ghost" id="signout" hidden>Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Sign in -->
+    <section class="signin" id="signin" hidden>
+      <img class="signin-mark" id="signin-mark" src="assets/logo-light.png" alt="Workable W mark" width="96" height="96">
+      <h1 class="display">It works.</h1>
+      <p class="lede">Every WorkableProjects app in one place. Sign in to load the launcher.</p>
+      <form id="signin-form" class="card form" autocomplete="on">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" required maxlength="40" placeholder="Alex" autocomplete="given-name">
+        <details>
+          <summary>GitHub token (optional)</summary>
+          <p class="hint">Only needed if you hit GitHub's hourly limit. Stored on this device only. Needs no scopes.</p>
+          <input id="token" name="token" type="password" placeholder="github_pat_…" autocomplete="off">
+        </details>
+        <button class="btn-primary" type="submit">Open launcher</button>
+      </form>
+    </section>
+
+    <!-- Launcher -->
+    <section class="launcher" id="launcher" hidden>
+      <div class="hero">
+        <p class="eyebrow" id="greeting">Good morning</p>
+        <h1 class="display" id="title">Your apps</h1>
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input id="q" type="search" placeholder="Search apps" aria-label="Search apps">
+          <kbd>/</kbd>
+        </div>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div class="grid" id="grid"></div>
+
+      <section class="unlinked" id="unlinked-wrap" hidden>
+        <h2 class="h2">Not launched yet</h2>
+        <ul id="unlinked"></ul>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Public repositories of <a href="https://github.com/WorkableProjects" target="_blank" rel="noopener">WorkableProjects</a></span>
+    <span id="themeNote"></span>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
